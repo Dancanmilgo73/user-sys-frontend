@@ -8,16 +8,18 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Home from './components/Home';
 
 function App() {
   return (
     <Router>
     <div className="App">
       <Routes>
+        <Route path="/" exact element={<Home/>} />
         
         <Route path="/login" element={<Login/>}/>
   
-   <Route path="/register"  element={<SignUp/>}/>
+        <Route path="/register"  element={<SignUp/>}/>
   
  
    </Routes>

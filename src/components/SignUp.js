@@ -3,8 +3,14 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ".././styles/signup.css"
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser } from '../redux/actions/users.action';
+// import { registerUser } from '../Api/users';
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const { addUser, loading } = useSelector((state) => state.auth);
+  // console.log(registerUserErr);
     const [values, setValues] = useState({username: '', email: '', password: '', confirmPassword: '' });
 
  const handleChange = (evt) => {
@@ -16,7 +22,9 @@ export default function SignUp() {
       }
       const handleSubmit = (e) => {
         e.preventDefault()
+        dispatch(registerUser(values))
       }
+      if(addUser.registerUserSuccess !== null) return <Navigate to={"/"} />;
     return (
         <Box
         sx={{
@@ -25,6 +33,7 @@ export default function SignUp() {
         }}
         className='signup_con'
       >
+        {addUser.registerUserErr&&<p style={{color: "red"}}>{addUser.registerUserErr}</p>}
           <form onSubmit={handleSubmit}>
         <div><TextField fullWidth name="username" label="Username" type="text" id="fullWidth" value={values.username}  onChange={handleChange}/></div>
         <div><TextField fullWidth name="email" label="Email" type="email" id="fullWidth" value={values.email}  onChange={handleChange}/></div>
